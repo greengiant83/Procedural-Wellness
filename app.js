@@ -5336,7 +5336,7 @@ function AppViewModel(data, isPortraitModeRequired) {
       context.drawImage(logo, 0, 0, width, height);
       var canvasData = canvas.toDataURL(strMime);
       var link = document.getElementById("downloadLink");
-      link.setAttribute("download", "REFLCT.jpg");
+      link.setAttribute("download", "LOREM.jpg");
       link.setAttribute("href", canvasData.replace("image/jpeg", "image/octet-stream"));
       link.click();
       self.isSaveAvailable(true);
