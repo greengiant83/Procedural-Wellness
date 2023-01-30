@@ -1,14 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="https://glitch.com/favicon.ico" />
+	<head>
+		<title>LOREM IPSUM</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, viewport-fit=cover, shrink-to-fit=no">
+		<meta name="HandheldFriendly" conent="true">
+		<link type="text/css" rel="stylesheet" href="static/main.css">
+    <link rel="icon" type="image/png" href="static/favicon.png">
 
-    
-    <title>Procedural Wellness</title>
-  </head>
-  <body>
-    <h1>Hello</h1>
-  </body>
+		<!-- <link type="text/css" rel="stylesheet" href="static/mobile.css">
+		<link type="text/css" rel="stylesheet" href="static/landscape.css"> -->
+	</head>
+	<body>
+		<div id="loadingContainer">
+			<h1>Loading...</h1>
+		</div>
+		<div id="wrapper" style="display:none">
+			<div id="container">
+				<div id="worldContainer"></div>
+				<div class="overlay" data-bind="visible: $root.isOverlayVisible"></div>
+				<div id="wrongOrientation" style="display:none">
+					<h1 id="orientLandscapeMessage">Please switch to landscape mode<br /> for optimal view</h1>
+					<h1 id="orientPortraitMessage">Please switch to portrait mode<br /> for optimal view</h1>
+				</div>
+        <!-- PRev section -->
+        <div id="prevUiContainer" class="ui-container">
+          <div id="innerUiContainer">
+            <div class="section-container">
+              <div class="section section--prev" data-bind="template: { name: previousSection().template, data: previousSection}, css: { 'animate--hide-start': prevVisibility() === 'visible', 'animate--hide-animate': prevVisibility() == 'hiding', 'animate--hide-end': prevVisibility() === 'hidden' }"></div>
+            </div>
+          </div>
+        </div>
+        <!-- current section -->
+				<div id="uiContainer" class="ui-container">
+					<div id="innerUiContainer">
+
+            <div class="section-container">
+              <div class="section section--current" data-bind="template: { name: currentSection().template, data: currentSection }, css: { 'animate--show-start': currentVisibility() === 'hidden', 'animate--show-animate': currentVisibility() == 'showing', 'animate--show-end': currentVisibility() === 'visible' }"></div>
+            </div>
+
+						<script type="text/html" id="splash">
+							<div id="splashContainer">
+								<img src="static/icons/logo-hp.png" id="logo" />
+								<div class="textContainer">
+									<div class="preText">Welcome to</div>
+									<div class="mainText">LOREM</div>
+								</div>
+							</div>
+						</script>
+
+						<script type="text/html" id="intro">
+							<div id="introContainer">
+								<p>
+									<span>A place to better understand your everyday interactions with</span>
+									<span>technology and discover how to make them mindful experiences for </span>
+									<span>a healthier, happier and more productive you. </span>
+								</p>
+								<p>
+									<span>Together, we will build a model of your digital life  </span>
+									<span>to help you think about how tech makes you feel, why you use it  </span>
+									<span>and how it adds value to your life. </span>
+								</p>
+							</div>
+						</script>
+
+						<script type="text/html" id="onboarding">
+							<div id="onboardingContainer">
+								<p>
+									<span>To create your LOREM IPSUM, you will be asked questions. </span>
+									<span>With each response, you will unlock new information  </span>
+									<span>about how certain interactions with technology impact </span>
+									<span>your overall digital wellness. </span>
+								</p>
+							</div>
+						</script>
+
+						<script type="text/html" id="prelude">
+							<div id="preludeContainer" data-bind="with:currentQuestion">
+								<div data-bind="text: text"></div>
+								<div class="sliderLabel" data-bind="text: valueDescription"></div>
+								<div><input type="range" min="0" max="1" step="0.0001" data-bind="value: value, valueUpdate: 'input', class: $parent.sliderClass" class="slider"></div>
+							</div>
+						</script>
+
+						<script type="text/html" id="questionSection">
+							<div id="questionSectionPanel">
+								<div data-bind="visible: isLoading">
+									<h1>Loading...</h1>
+								</div>
+								<div data-bind="visible: !isLoading()">
+									<div data-bind="visible: stage() == 'info'">
+										<h1 data-bind="text: title"></h1>
+										<div class="info" data-bind="text: info"></div>
+									</div>
+									<div data-bind="visible: stage() == 'questions'">
+										<div>
+											<h1 data-bind="text: title"></h1>
+											<div data-bind="with: currentQuestion">
+												<div class="questionText" data-bind="text: text"></div>
+                        <div class="sliderLabel">
+                          <span data-bind="text: valueDescription"></span>
+                          <span data-bind="text: currentUnit"></span>
+                        </div>
+												<div><input type="range" min="0" max="1" step="0.0001" data-bind="value: value, valueUpdate: 'input', class: $parent.sliderClass" class="slider"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</script>
+
+						<script type="text/html" id="calculating">
+							<div id="calculatingSection">
+								<p class="calculating-description">Before meeting your unique LOREM IPSUM, here are some quick tips and insights to deepen your understanding.</p>
+								<div class="calculating-buttoncontainer" style="text-align: center">
+									<button class="button--calculating" id="calculatingButton" data-bind="click: $root.findOutMore">
+										<p class="preserve">Find out more</p>
+										<img src="static/icons/see-more.png"/>
+									</button>
+									<button class="button--calculating" id="calculatingButton" data-bind="click: $root.continueToResult">
+                    <p class="preserve">Meet my LOREM</p>
+										<img src="static/icons/view-reflction.png"/>
+                  </button>
+								</div>
+							</div>
+						</script>
+
+						<script type="text/html" id="insights">
+							<div id="insightsContainer">
+                <div class="insights" data-bind="style: { '--top-distance': currentInsight().topDistance, '--bottom-distance': currentInsight().bottomDistance }">
+                  <h1 class="insights-title" data-bind="text: currentInsight().title"></h1>
+                  <p class="insights-summary">
+                    <span data-bind="text: currentInsight().preResponseText"></span>
+                    <span class='insights-summary-value' data-bind="text: insightQuestions().value"></span>
+                    <span data-bind="text: currentInsight().postResponseText"></span>
+                    <span class='insights-summary-value' data-bind="text: insightQuestions().feeling"></span>.
+                  </p>
+                  <div class="insights-descriptioncontainer" data-bind="ref: currentInsight().descriptionContainerEl">
+                    <p class="insights-description" data-bind="text: currentInsight().copyDescription"></p>
+                    <p class="insights-description" data-bind="text: currentInsight().copyTakeaway"></p>
+                  </div>
+                  <div class="insights-nextcontainer">
+                    <button class="insights-next" data-bind="click: $root.back">
+                      <svg class="insights-nextimage" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M32.4914 9.00001C36.9448 8.9965 41.2991 10.314 45.0033 12.786C48.7076 15.2579 51.5954 18.7733 53.3012 22.8869C55.0071 27.0006 55.4544 31.5278 54.5864 35.8958C53.7185 40.2637 51.5743 44.276 48.4253 47.425C45.2763 50.574 41.2641 52.7181 36.8961 53.5861C32.5282 54.454 28.0009 54.0067 23.8872 52.3009C19.7735 50.595 16.2583 47.7074 13.7863 44.0031C11.3144 40.2988 9.99686 35.9445 10.0004 31.4912C10.0097 25.529 12.3823 19.8137 16.5982 15.5979C20.8141 11.382 26.5293 9.00937 32.4914 9.00001ZM32.4914 49.9091C36.1349 49.9126 39.6975 48.8353 42.7287 46.8137C45.7598 44.792 48.1233 41.9168 49.52 38.5517C50.9167 35.1865 51.2841 31.4827 50.5754 27.9088C49.8667 24.3349 48.1139 21.0515 45.5388 18.4739C42.9637 15.8964 39.682 14.1405 36.1088 13.4284C32.5356 12.7163 28.8314 13.08 25.4649 14.4735C22.0984 15.867 19.221 18.2276 17.1964 21.2568C15.1718 24.286 14.0912 27.8477 14.0912 31.4912C14.0958 36.3714 16.0355 41.0506 19.4847 44.5031C22.9339 47.9556 27.6112 49.8997 32.4914 49.9091Z" fill="#FFFCF9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M34.085 22.4952C34.2577 22.3137 34.4669 22.1709 34.6989 22.0763C34.9309 21.9817 35.1805 21.9373 35.4309 21.9463C35.7032 21.9316 35.9756 21.9727 36.2314 22.0671C36.4872 22.1615 36.721 22.3072 36.9185 22.4952C37.1046 22.672 37.2502 22.887 37.345 23.1255C37.4398 23.364 37.4816 23.6203 37.4676 23.8765C37.4678 24.3955 37.2716 24.8954 36.9185 25.2757L30.6315 31.474L36.9185 37.7078C37.1051 37.9026 37.2502 38.1333 37.3446 38.3861C37.4389 38.6388 37.4808 38.9082 37.4676 39.1776C37.474 39.4251 37.4283 39.6712 37.3337 39.9C37.2392 40.1288 37.0977 40.3351 36.9185 40.5058C36.7374 40.6898 36.5204 40.8345 36.2809 40.9309C36.0107 41.0361 35.72 41.0785 35.4309 41.0548C35.2 41.067 34.9694 41.0245 34.7579 40.9309C34.4863 40.8835 34.2444 40.7308 34.085 40.5058L26.523 32.8908C26.3097 32.7252 26.1369 32.5131 26.0182 32.2706C25.8994 32.0282 25.8379 31.7617 25.8379 31.4917C25.8379 31.2217 25.8994 30.9553 26.0182 30.7128C26.1369 30.4704 26.3097 30.2582 26.523 30.0926L34.085 22.4952Z" fill="#FFFCF9"/>
+</svg>
+                      <span class="insights-nexttext">Back</span>
+                    </button>
+                    <button class="insights-next" data-bind="click: $root.continue">
+                      <span class="insights-nexttext">Next</span>
+                      <svg class="insights-nextimage insights-nextimage--flipped" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M32.4914 9.00001C36.9448 8.9965 41.2991 10.314 45.0033 12.786C48.7076 15.2579 51.5954 18.7733 53.3012 22.8869C55.0071 27.0006 55.4544 31.5278 54.5864 35.8958C53.7185 40.2637 51.5743 44.276 48.4253 47.425C45.2763 50.574 41.2641 52.7181 36.8961 53.5861C32.5282 54.454 28.0009 54.0067 23.8872 52.3009C19.7735 50.595 16.2583 47.7074 13.7863 44.0031C11.3144 40.2988 9.99686 35.9445 10.0004 31.4912C10.0097 25.529 12.3823 19.8137 16.5982 15.5979C20.8141 11.382 26.5293 9.00937 32.4914 9.00001ZM32.4914 49.9091C36.1349 49.9126 39.6975 48.8353 42.7287 46.8137C45.7598 44.792 48.1233 41.9168 49.52 38.5517C50.9167 35.1865 51.2841 31.4827 50.5754 27.9088C49.8667 24.3349 48.1139 21.0515 45.5388 18.4739C42.9637 15.8964 39.682 14.1405 36.1088 13.4284C32.5356 12.7163 28.8314 13.08 25.4649 14.4735C22.0984 15.867 19.221 18.2276 17.1964 21.2568C15.1718 24.286 14.0912 27.8477 14.0912 31.4912C14.0958 36.3714 16.0355 41.0506 19.4847 44.5031C22.9339 47.9556 27.6112 49.8997 32.4914 49.9091Z" fill="#FFFCF9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M34.085 22.4952C34.2577 22.3137 34.4669 22.1709 34.6989 22.0763C34.9309 21.9817 35.1805 21.9373 35.4309 21.9463C35.7032 21.9316 35.9756 21.9727 36.2314 22.0671C36.4872 22.1615 36.721 22.3072 36.9185 22.4952C37.1046 22.672 37.2502 22.887 37.345 23.1255C37.4398 23.364 37.4816 23.6203 37.4676 23.8765C37.4678 24.3955 37.2716 24.8954 36.9185 25.2757L30.6315 31.474L36.9185 37.7078C37.1051 37.9026 37.2502 38.1333 37.3446 38.3861C37.4389 38.6388 37.4808 38.9082 37.4676 39.1776C37.474 39.4251 37.4283 39.6712 37.3337 39.9C37.2392 40.1288 37.0977 40.3351 36.9185 40.5058C36.7374 40.6898 36.5204 40.8345 36.2809 40.9309C36.0107 41.0361 35.72 41.0785 35.4309 41.0548C35.2 41.067 34.9694 41.0245 34.7579 40.9309C34.4863 40.8835 34.2444 40.7308 34.085 40.5058L26.523 32.8908C26.3097 32.7252 26.1369 32.5131 26.0182 32.2706C25.8994 32.0282 25.8379 31.7617 25.8379 31.4917C25.8379 31.2217 25.8994 30.9553 26.0182 30.7128C26.1369 30.4704 26.3097 30.2582 26.523 30.0926L34.085 22.4952Z" fill="#FFFCF9"/>
+</svg>
+                    </button>
+                  </div>
+                </div>
+							</div>
+						</script>
+
+						<script type="text/html" id="results">
+							<div id="resultsContainer">
+								<h1>Meet your LOREM IPSUM</h1>
+								<div class="info">
+									<p>It's a representation of your digital life across connectivity,  productivity, health & wellbeing and entertainment.</p>  
+									<p>There's no right or wrong shape.</p>
+									<p>It's about giving you time to LOREM on your relationship with technology and to help you consider small changes in your day that could help your mood and LOREM evolve.</p>
+								</div>
+								<div style="text-align: center">
+									<button id="saveButton" data-bind="click: $root.saveImage, css: { disabled: $root.isSaveAvailable() == false }">
+										<span class="preserve" data-bind="visible: $root.isSaveAvailable() == true">Save image</span>
+										<span class="preserve" data-bind="visible: $root.isSaveAvailable() == false">Please wait</span>
+										<img src="static/icons/icon-save.png"/>
+									</button>
+									<button id="resetButton" data-bind="click: $root.reset, css: { disabled: $root.isSaveAvailable() == false }"><span class="preserve">Start again</span><img src="static/icons/icon-start-again.png"/></button>
+								</div>
+							</div>
+						</script>
+					</div>		
+
+					<div id="navigationPanel">
+						<button id="leftButton" data-bind="visible: $root.hideBackButton() == false, click: $root.back"></button>
+						<button id="rightButton" data-bind="visible: $root.hideNextButton() == false, click: $root.continue"></button>
+            <div id="draggableSection" data-bind="css: { active: $root.showDragBar }">
+              <div id="topRightButtonContainer">
+                <button id="fullscreenButton" data-bind="click: $root.toggleFullscreen, visible: $root.showFullscreenButton">
+                  <img data-bind="visible:$root.isFullScreen() == true" src="static/icons/icon-minimize.png" />
+                  <img data-bind="visible:$root.isFullScreen() == false" src="static/icons/icon-maximize.png" />
+                </button>
+                <button id="closeButton" data-bind="click: $root.closeApp, visible: $root.showCloseButton">
+                  <img src="static/icons/close.png" />
+                </button>
+              </div>
+            </div>
+						<div id="mobileNav" class="mobile" data-bind="visible: $root.showNavProgression() == false">
+							<button id="rightButtonMobile" data-bind="visible: $root.hideNextButton() == false, click: $root.continue"><img src="static/icons/arrow-next-sans-circle.png" /></button>
+						</div>
+						<div id="navButtons" data-bind="visible: $root.showNavProgression">
+							<div class="center">
+								<button id="leftTick" class="mobile" data-bind="click: $root.back"><img src="static/icons/mobile/icon-arrow-left.png" /></button>
+								<button class="pip" data-bind="css: { active: $root.progressIndex() >= 1 }" id="left"></button>
+								<button class="pip" data-bind="css: { active: $root.progressIndex() >= 2 }"></button>
+								<button class="pip" data-bind="css: { active: $root.progressIndex() >= 3 }"></button>
+								<button class="pip" data-bind="css: { active: $root.progressIndex() >= 4 }"></button>
+								<button class="pip" data-bind="css: { active: $root.progressIndex() >= 5 }"></button>
+								<button class="pip" data-bind="css: { active: $root.progressIndex() >= 6 }"></button>
+								<button class="pip" data-bind="css: { active: $root.progressIndex() >= 7 }"></button>
+								<button class="pip" data-bind="css: { active: $root.progressIndex() >= 8 }" id="right"></button>
+								<button id="rightTick" class="mobile" data-bind="click: $root.continue"><img src="static/icons/mobile/icon-arrow-right.png" /></button>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<a id="downloadLink"></a>
+		<img src="static/icons/save-overlay.png" id="saveLogo" style="position:absolute;left:0;top:0;display:none;width:500px" />
+		<img id="saveImg" style="display:none;position:absolute;top:0;left:0;" width="500" />
+		<canvas id="saveCanvas" style="display:none;position:absolute;top:0;left:0" width="1024" height="1024"></canvas>
+
+		<script>
+
+		</script>
+		<script type="module" src="app.js"></script>
+		<script type="module" src="analytics.js"></script>
+	</body>
 </html>

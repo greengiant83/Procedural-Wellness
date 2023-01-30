@@ -1,0 +1,48 @@
+//START Q7 Vertex
+float t = fit01(fillAmount, 0.0, 0.35);
+t = fit(t, 0.0, 1.0, -fillWidth, 1.0 + fillWidth);
+t = fit(_u, t, t + fillWidth, 1.0, 0.0);
+
+vec3 pushDirection = normalize(_centroid - _center);
+
+//Add a dash of noise
+float speed = 0.25;
+float noise = snoise(vec2(_u * 2000.0 + time * speed, 0));
+noise *= t;
+
+//morph
+float sphereSize = 0.08 * fit01(rand(_centroid.xy), 0.25, 1.0);
+float shrinkAmount = 0.8;
+vec3 direction = normalize(transformed - _centroid);
+vec3 newP = _centroid + direction * sphereSize;
+vec3 newN = normalize(transformed - _centroid);
+transformed = mix(transformed, _centroid, fit01(t, 0.0, shrinkAmount));
+transformed = mix(transformed, newP, t * morph);
+vNormal = normalize(mix(vNormal, newN, t * morph));
+
+//Rotate chunks
+float rotateAmount = (t + noise * 0.7) * fit01(morph, 5.0, 1.2) + morph;
+vec3 axis = vec3(fit01(rand(pushDirection.xy), -1.0, 1.0), fit01(rand(pushDirection.xy * 3.62), -1.0, 1.0), fit01(rand(pushDirection.xy * 5.49), -1.0, 1.0));
+mat4 rotMat = rotationMatrix(axis, rotateAmount);
+vec4 p = vec4(transformed - _center, 1.0);
+p = rotMat * p;
+transformed = p.xyz + _center;
+
+vec4 rotNormal = vec4(vNormal, 1.0);
+rotNormal = rotMat * rotNormal;
+vNormal = rotNormal.xyz;
+
+//Explode
+float distance = 0.36;
+transformed += pushDirection * distance * t;
+
+//Jitter
+vec3 jitter = vec3(fit01(rand(pushDirection.xy), -1.0, 1.0), fit01(rand(pushDirection.xy * 1.41), -1.0, 1.0), fit01(rand(pushDirection.xy * 8.34), -1.0, 1.0));
+transformed += jitter * (distance + noise * 0.1) * t;
+
+vColor = mix(vColor, vec3(1.0, 1.0, 1.0), fit(morph, 0.0, 0.5, 0.5, 0.0)); //(1.0 - morph) * 0.5);
+
+// //Transfer attributes
+vGroupInside = _groupinside;
+vMorph = morph;
+//END

@@ -1,0 +1,61 @@
+//START Q6 Vertex
+
+float slowT = fillAmount * fillAmount;
+float fastT = 1.0 - (1.0 - fillAmount) * (1.0 - fillAmount);
+float r = rand(vec2(_speed, 0.0));
+float t = mix(slowT, fastT, r);
+
+float pscale = size * _pscale * 3.0 * t;
+
+vec4 mvPosition = vec4( transformed, 1.0 );
+mat4 rotMatrix = rotationMatrix(_axis, time * 0.1);
+mvPosition = rotMatrix * mvPosition;
+mvPosition = modelViewMatrix * mvPosition;
+gl_Position = projectionMatrix * mvPosition;
+
+
+
+//transformed *= instancePScale * t; 
+//vec4 mvPosition = vec4( transformed, 1.0 );
+
+//mvPosition = instanceMatrix * mvPosition;
+
+//mat4 rotMatrix = rotationMatrix(_axis, time * 0.1); //instanceSpeed);
+//mvPosition = rotMatrix * mvPosition;
+
+// #ifdef FULL
+// 	vec4 rotNormal = vec4(vNormal, 1.0);
+// 	rotNormal = rotMatrix * rotNormal;
+// 	vNormal = rotNormal.xyz;
+// #endif
+
+//mvPosition = modelViewMatrix * mvPosition;
+//gl_Position = projectionMatrix * mvPosition;
+
+
+
+
+// Previous Instanced Version
+
+// float slowT = fillAmount * fillAmount;
+// float fastT = 1.0 - (1.0 - fillAmount) * (1.0 - fillAmount);
+// float r = rand(vec2(instanceSpeed, 0.0));
+// float t = mix(slowT, fastT, r);
+
+// transformed *= instancePScale * t; 
+// vec4 mvPosition = vec4( transformed, 1.0 );
+
+// mvPosition = instanceMatrix * mvPosition;
+
+// mat4 rotMatrix = rotationMatrix(instanceAxis, time * 0.1); //instanceSpeed);
+// mvPosition = rotMatrix * mvPosition;
+
+// #ifdef FULL
+// 	vec4 rotNormal = vec4(vNormal, 1.0);
+// 	rotNormal = rotMatrix * rotNormal;
+// 	vNormal = rotNormal.xyz;
+// #endif
+
+// mvPosition = modelViewMatrix * mvPosition;
+// gl_Position = projectionMatrix * mvPosition;
+//END

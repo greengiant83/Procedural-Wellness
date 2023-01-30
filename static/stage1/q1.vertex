@@ -1,0 +1,22 @@
+//START Q1 Vertex
+float speed = 0.15;
+float noiseAmplitude = 0.2;
+float t = fit01(fillAmount, 0.2, 0.7);
+float noiseFrequency = 3.0;
+t = fit(t, 0.0, 1.0, -fillWidth, 1.0 + fillWidth);
+
+float shrink = fit(_u, t, t + fillWidth, 0.0, 1.0);
+float noise = snoise(vec2(_center.x * noiseFrequency + time * speed, _center.y * noiseFrequency));
+noise = fit(noise, -1.0, 1.0, 0.0, noiseAmplitude);
+shrink += noise;
+
+//Morph between shapes
+transformed = mix(transformed, _morphp, blend);
+vNormal = normalize(mix(transformedNormal, normalMatrix * _morphn, blend));
+
+float modScalar = fit(mod(_u, 0.01), 0.0, 0.01, 0.0, 1.0);
+modScalar *= 1.0 - fillAmount;
+shrink += modScalar;
+
+transformed = mix(transformed, _center, clamp(shrink, 0.1, 1.0)); //0 is fullsize, 1 is completely shrunk
+//END

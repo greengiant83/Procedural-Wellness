@@ -1,0 +1,16 @@
+//START Prelude Vertex
+float speed = 0.5;
+
+transformed *= instancePScale * 15.0 * revealFactor;
+
+vec4 mvPosition = vec4( transformed, 1.0 );
+mvPosition = instanceMatrix * mvPosition;
+mat4 rotMatrix = rotationMatrix(instanceAxis, time * speed);
+mvPosition = rotMatrix * mvPosition;
+mvPosition = modelViewMatrix * mvPosition;
+gl_Position = projectionMatrix * mvPosition;
+
+vec4 rotNormal = vec4(transformedNormal, 1.0);
+rotNormal = rotMatrix * rotNormal;
+transformedNormal = rotNormal.xyz;
+//END

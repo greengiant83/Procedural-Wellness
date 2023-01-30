@@ -1,0 +1,55 @@
+//START Q3 Vertex
+float speed = 0.25;
+float noiseAmplitude = 0.07;
+float u = uv.x;
+
+float t = fit01(fillAmount, 0.0, 0.75);
+t = fit(t, 0.0, 1.0, -fillWidth, 1.0 + fillWidth);
+float v = fit(u, t, t + fillWidth, 0.05, 1.0);
+
+float t2 = fit01(colorScalar, 0.0, 1.0);
+t2 = fit(t2, 0.0, 1.0, -fillWidth * 0.5, 1.0 + fillWidth * 0.5);
+t2 = fit(u, t2, t2 + fillWidth * 0.5, 1.0, 0.0);
+
+float noise = snoise(vec2(u * 2000.0 + time * speed, 0.0));
+noise *= noiseAmplitude;
+v += noise;
+
+// morphTargetBaseInfluence is set based on BufferGeometry.morphTargetsRelative value:
+// When morphTargetsRelative is false, this is set to 1 - sum(influences); this results in position = sum((target - base) * influence)
+// When morphTargetsRelative is true, this is set to 1; as a result, all morph targets are simply added to the base after weighting
+transformed *= morphTargetBaseInfluence;
+transformed += morphTarget0 * v; // morphTargetInfluences[ 0 ];
+
+#ifndef USE_MORPHNORMALS
+	transformed += morphTarget4 * v;
+#endif
+
+vec3 dullColor = vec3(vColor.z * 0.135, vColor.z * 0.535, vColor.z);
+vColorScalar = colorScalar * t2;
+vColor = mix(dullColor, vColor, vColorScalar);
+
+////////////////////////
+//Twist along center ring
+float theta = u * 6.28;
+float radius = 1.0;
+vec4 center = vec4(cos(theta) * radius, sin(theta) * radius, 0.0, 1.0);
+mat4 rotMat = rotationMatrix(vec3(0, 0, 1), theta);
+mat4 invertRotMat = rotationMatrix(vec3(0, 0, 1), -theta);
+mat4 twistMat = rotationMatrix(vec3(0, 1, 0), time * 0.125);
+vec4 p = vec4(transformed, 1);
+vec4 n = vec4(vNormal, 1);
+
+p -= center;
+p = rotMat * p;
+p = twistMat * p;
+p = invertRotMat * p;
+p += center;
+
+n = rotMat * n;
+n = twistMat * n;
+n = invertRotMat * n;
+
+transformed = p.xyz;
+vNormal = n.xyz;
+//END

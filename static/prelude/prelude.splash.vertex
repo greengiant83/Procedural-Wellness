@@ -1,0 +1,20 @@
+//START Prelude Vertex
+float speed = 0.5;
+float scaler;
+mat4 rotMatrix = rotationMatrix(instanceAxis, time * speed);
+
+vec4 p = vec4(instancePosition, 1.0);
+p = rotMatrix * p;
+
+scaler = fit(p.z, 2.0, -2.0, 0.0, 1.0);
+float colorScaler = 1.0 - scaler;
+vColor = vec3(colorScaler, colorScaler, colorScaler);
+p.z = 0.0;
+
+transformed *= instancePScale * scaler * 30.0 * revealFactor;
+transformed += p.xyz;
+
+vec4 mvPosition = vec4( transformed, 1.0 );
+mvPosition = instanceMatrix * mvPosition;
+mvPosition = modelViewMatrix * mvPosition;
+gl_Position = projectionMatrix * mvPosition;

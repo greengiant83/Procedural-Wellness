@@ -1,0 +1,379 @@
+
+/*@media (orientation: landscape)
+{*/
+  #draggableSection {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 141px;
+  }
+  #draggableSection.active {
+    pointer-events: auto;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+  }
+	#topRightButtonContainer
+	{
+		/*display:none;*/
+		position: absolute;
+		top: 45px;
+		right: 80px;
+    display: flex;
+	}
+  #topRightButtonContainer button {
+    -webkit-app-region: no-drag;
+    margin: 0 20px;
+    width: 45px;
+  }
+  #topRightButtonContainer button img {
+    width: 100%;
+    height: auto;
+  }
+
+	#wrapper
+	{
+		padding:0;
+		margin:0;
+		width: 100vw;
+		height: calc(var(--vh, 1vh) * 100);
+	}
+
+	#container
+	{
+		width:1920px;
+		height:1080px;
+		position: relative;
+		left: 50%;
+		top: 50%;
+		transform-origin: center center;
+	}
+
+	#wrongOrientation
+	{
+		width:100%;
+		height:100%;
+	}
+
+	#worldContainer
+	{
+		position:absolute;
+		width:100%;
+		height:100%;
+		left:0;
+		top:0;
+	}
+
+	.ui-container
+	{
+		width:100%;
+		height:100%;
+		z-index: 3;
+	}
+
+	.mobile
+	{
+		display:none;
+	}
+
+	/*Nav Buttons*/
+	#leftButton
+	{
+		position:absolute;
+		top:50%;
+		left:80px;
+		width:93px;
+		height:93px;
+	}
+
+	#rightButton
+	{
+		position:absolute;
+		top:50%;
+		right:80px;
+		width:93px;
+		height:93px;
+	}
+
+	#navButtons
+	{
+		position:absolute;
+		width:100%;
+		bottom:70px;
+		text-align: center;
+	}
+
+	/*Splash Container*/
+	#splashContainer #logo
+	{
+		position: absolute;
+		left: 900px;
+		top: 395px;
+	}
+
+	#splashContainer .textContainer
+	{
+		position: absolute;
+		left:1150px;
+		top:390px;
+	}
+
+	#splashContainer .preText
+	{
+		font-size:38px;
+	}
+
+	#splashContainer .mainText
+	{
+		font-size:107px;
+		text-transform: uppercase;
+		width:576px;
+		margin-top:32px;
+		line-height: 1em;
+		letter-spacing: 0.1em;	
+	}
+
+	/*Intro Container*/
+	#introContainer
+	{
+		position:absolute;
+		right:150px;
+		top:420px;
+		width:900px;
+		font-size:29px;
+		text-align: center;
+	}
+
+	#introContainer span
+	{
+		display:block;
+	}
+
+	/*Onboarding Container*/
+	#onboardingContainer
+	{
+		position:absolute;
+		right:150px;
+		top:420px;
+		width:900px;
+		font-size:29px;
+		text-align: center;
+	}
+
+	#onboardingContainer span
+	{
+		display:block;
+	}
+
+	/*Prelude Container*/
+	#preludeContainer
+	{
+		position:absolute;
+		right:300px;
+		top:444px;
+		width:653px;
+		font-size:29px;
+		text-align: center;
+	}
+
+	#preludeContainer .sliderLabel
+	{
+		margin-top:106px;
+	}
+
+	/*Question Section*/
+	#questionSectionPanel
+	{
+		position: absolute;
+		left:1020px; 
+		top:220px;
+		width:640px;
+		text-align: center;
+		font-size:28px;
+	}
+
+	#questionSectionPanel h1
+	{
+		margin:0;
+		padding:0;
+		font-size:70px;
+		font-weight: normal;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		line-height: 1.1em;
+		display:table-cell;
+		vertical-align: bottom;
+		width:640px;
+		height:220px;
+	}
+
+	#questionSectionPanel .info
+	{
+		margin-top:60px;
+		font-weight: normal;
+	}
+
+	#questionSectionPanel .questionText
+	{
+		margin-top:60px;
+		margin-bottom:20px;
+		height:210px;
+	}
+
+	#questionSectionPanel img
+	{
+		margin-top:50px;
+	}
+
+	#questionSectionPanel .insight
+	{
+		margin-top:65px;
+	}
+
+	/*Calculating Section*/
+	#calculatingSection
+	{
+		position: absolute;
+    left: 900px;
+    top: 410px;
+    width: 850px;
+		text-align: center;
+		font-size:28px;
+	}
+  #calculatingSection p {
+    margin-bottom: 100px;
+  }
+  #calculatingButton {
+    width: 200px;
+  }
+  #calculatingButton p {
+    margin-bottom: 0;
+  }
+  .calculating-buttoncontainer {
+    box-sizing: border-box;
+    padding-right: 50px;
+  }
+
+
+	/*Progress Bar*/
+	progress
+	{
+		width: 424px;
+		height: 10px;
+	}
+
+	progress::-webkit-progress-bar {
+		background-color: #4d4d4d;
+		border-radius: 13px;
+		box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5) inset;
+	}
+
+	progress::-webkit-progress-value {
+		border-radius: 13px; 
+	}
+
+	progress::-moz-progress-bar {
+		border-radius: 13px; 
+	}
+
+	#innerUiContainer {
+	  height: 100%;
+	}
+	.section {
+	  height: 100%;
+	}
+	.section-container {
+	  height: 100%;
+	}
+	/*Insights Container*/
+	#insightsContainer
+	{
+		margin-left: 725px; 
+		top: 0;
+		width: 1100px;
+		text-align: center;
+		font-size:28px;
+    box-sizing: border-box;
+    padding-top: 150px;
+    height: 100%;
+	}
+
+	#insightsContainer h1
+	{
+		margin:0 0 60px;
+		padding:0;
+		font-size:85px;
+		font-weight: normal;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		line-height: 1.1em;
+	}
+
+	#insightsContainer .info
+	{
+		margin-top:60px;
+		margin-bottom:120px;
+	}
+
+	#insightsContainer #saveButton
+	{
+		margin-right:100px; 
+	}
+
+	/*Results Container*/
+	#resultsContainer
+	{
+		position: absolute;
+		left: 830px; 
+		top: 220px;
+		width: 900px;
+		text-align: center;
+		font-size:28px;
+	}
+
+	#resultsContainer h1
+	{
+		margin:0;
+		padding:0;
+		font-size:85px;
+		font-weight: normal;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		line-height: 1.1em;
+		height:220px;
+	}
+
+	#resultsContainer .info
+	{
+		margin-top:60px;
+		margin-bottom:120px;
+	}
+
+	#resultsContainer #saveButton
+	{
+		margin-right:100px; 
+	}
+/*}*/
+
+.insights {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.insights-summary {
+  font-size: 38px;
+  margin: 30px 0 60px;
+  text-align: center;
+}
+
+.insights-description {
+  line-height: 1;
+  text-align: left;
+  box-sizing: border-box;
+  padding: 0 100px;
+}
+
+.insights-nextcontainer {
+  width: 100%;
+  bottom: 100px;
+  margin: auto 0 100px;
+}

@@ -1,0 +1,10 @@
+//START Prelude Vertex
+float speed = 0.5;
+float pscale = size * _pscale * 15.0 * revealFactor;
+
+vec4 mvPosition = vec4( transformed, 1.0 );
+mat4 rotMatrix = rotationMatrix(_axis, time * speed);
+mvPosition = rotMatrix * mvPosition;
+mvPosition = modelViewMatrix * mvPosition;
+gl_Position = projectionMatrix * mvPosition;
+//END

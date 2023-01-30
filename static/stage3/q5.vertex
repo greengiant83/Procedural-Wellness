@@ -1,0 +1,48 @@
+//START Q5 Vertex
+
+float u = instanceColor.x;
+float thickness = fit01(fillAmount, 1.00001, 30.0);
+float rotNoiseAmplitude = fit01(fillAmount, 3.50, 1.5);
+float curveNoiseAmplitude = fit01(fillAmount, 0.5, 0.2);
+float rotNoise = snoise(vec2(u * 1.0 + time * speed, 10.0));
+rotNoise = fit(rotNoise, -1.0, 1.0, -rotNoiseAmplitude, rotNoiseAmplitude);
+vec3 axis = vec3(snoise(vec2(u, 0.0)), snoise(vec2(u + 1.3, 1.0)), snoise(vec2(u + 0.67, 2.0)));
+
+float adjustedThickness = thickness * mod(u, 0.1);
+//thickness = mix(adjustedThickness, thickness, 1.0 - fillWidth);
+
+thickness = fit01(fillAmount, 0.001, 0.05);
+transformed += _vwide * thickness * 0.3;
+transformed += _vlong * thickness;
+
+transformed *= fit01(u, fit01(fillWidth, 0.1, 0.8), fit01(fillWidth, 0.8, 1.2));
+//transformed.z *= thickness;
+transformed.z += fit(snoise(vec2(transformed.x, transformed.y)), -1.0, 1.0, -curveNoiseAmplitude, curveNoiseAmplitude);
+
+vec4 mvPosition = vec4( transformed, 1.0 );
+
+mat4 matrix = rotationMatrix(axis, rotNoise);
+mvPosition = matrix * mvPosition;
+mvPosition = instanceMatrix * mvPosition;
+
+#ifdef FULL
+	vec4 rotNormal = vec4(vNormal, 1.0);
+	rotNormal = matrix * rotNormal;
+	vNormal = rotNormal.xyz;
+#endif
+
+mvPosition = modelViewMatrix * mvPosition;
+gl_Position = projectionMatrix * mvPosition;
+
+#ifdef FULL
+	float colorScalar = u; //fit01(u, fillWidth, 0.2);
+
+	vec3 colorA = vec3(0.2, 0.2, 1.0);
+	vec3 colorB = vec3(0.0, 0.1, 0.05);
+	vec3 baseColor = colorB; // mix(colorA, colorB, fillAmount);
+
+	vec3 exteriorColor = baseColor * fit01(fillWidth, 0.1, 0.5);
+	vec3 interiorColor = baseColor * fit01(fillWidth, 0.0, 4.0);
+	vColor = mix(interiorColor, exteriorColor, u);
+#endif
+//END
